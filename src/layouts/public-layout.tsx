@@ -1,7 +1,7 @@
 import Header from "@/components/header";
-import Footer from "@/components/footer";
 import { Outlet } from "react-router-dom";
 import AuthHandler from "@/handlers/auth-handler";
+import { Footer } from "@/components/footer";
 
 export const PublicLayout = () => {
     return (
