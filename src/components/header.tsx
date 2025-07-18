@@ -12,12 +12,12 @@ const Header = () => {
     const { userId }=useAuth();
     return <header className={cn("w-full border-b ")}>
         <Container>
-            <div className="flex gap-4">{/*left side8}
+            <div className="flex gap-4">{/*left side8/}
                 <div className="max-w-7xl mx-auto flex items-center  px-6 "></div>
                 {/* You can add your logo*/}
                 <LogoContainer />
                 {/*Navigation section */}
-                <nav className="hidden md:flex items-center gap-3">
+                <nav className="hidden md:flex items-center gap-3 ">
                     <NavigationRoutes />
                     {userId &&(
                         <NavLink

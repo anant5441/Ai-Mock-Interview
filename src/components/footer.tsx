@@ -64,9 +64,7 @@ export const Footer = () => {
             <div>
                 <h3 className="font-bold text-lg mb-4">About Us</h3>
                 <p>
-                We are committed to helping you unlock your full potential with
-                AI-powered tools. Our platform offers a wide range of resources to
-                improve your interview skills and chances of success.
+                Our mission is to empower you through intelligent AI-driven solutions. From realistic mock interviews to instant feedback, we help you build confidence and succeed in every opportunity you pursue.
                 </p>
             </div>
 
@@ -89,7 +87,7 @@ export const Footer = () => {
             {/* Fourth Column: Address and Social Media */}
             <div>
                 <h3 className="font-bold text-lg mb-4">Contact Us</h3>
-                <p className="mb-4">123 AI Street, Tech City, 12345</p>
+                <p className="mb-4">41 Omaxe Street, Noida, 12345</p>
                 <div className="flex gap-4">
                 <SocialLink
                     href="https://facebook.com"

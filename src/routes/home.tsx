@@ -14,27 +14,25 @@ const HomePage = () => {
                     AI Superpower
                     </span>
                     <span className="text-gray-500 font-extrabold">
-                    - A better way to
+                    – A smarter way to
                     </span>
                     <br />
-                    improve your interview chances and skills
+                    master interviews with confidence
                     </h2>
 
                     <p className="mt-4 text-muted-foreground text-sm">
-                    Boost your interview skills and increase your success rate with
-                    AI-driven insights. Discover a smarter way to prepare, practice, and
-                    stand out.
+                    Supercharge your preparation with AI tools that mimic real interviews. Get feedback, track growth, and walk into every interview with clarity and confidence.
                     </p>
                </div>
                <div className="flex w-full items-center justify-evenly md:px-12 md:py-16 md:items-center md:justify-end gap-12">
                     <p className="text-3xl font-semibold text-gray-900 text-center">
-                    250k+
+                    180k+
                     <span className="block text-xl text-muted-foreground font-normal">
                     Offers Recieved
                     </span>
                     </p>
                     <p className="text-3xl font-semibold text-gray-900 text-center">
-                    1.2M+
+                    1M+
                     <span className="block text-xl text-muted-foreground font-normal">
                     Interview Aced
                     </span>
