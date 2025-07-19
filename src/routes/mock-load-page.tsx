@@ -1,9 +1,8 @@
 
-
 const MockLoadPage = () => {
   return (
     <div>
-      
+      MockloadPage
     </div>
   )
 }
