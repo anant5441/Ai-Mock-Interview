@@ -11,6 +11,7 @@ import { Generate } from "./components/generate";
 import Dashboard from "./routes/dashboard";
 import CreateEditPage from "./routes/create-edit-page";
 import MockLoadPage from "./routes/mock-load-page";
+import MockInterviewPage from "./routes/mock-interview-page";
 
 
 const App = () => {
@@ -39,6 +40,10 @@ const App = () => {
           <Route index element={<Dashboard/>}/>
           <Route path=":interviewId" element={<CreateEditPage />} />
           <Route path="interview/:interviewId" element={<MockLoadPage />} />
+          <Route
+              path="interview/:interviewId/start"
+              element={<MockInterviewPage />}
+            />
         </Route>  
         </Route>
       </Routes>
