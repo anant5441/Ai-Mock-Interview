@@ -46,16 +46,16 @@ const HomePage = () => {
 
         {/* image section */}
         <div className="w-full mt-4 rounded-xl bg-gray-100 h-[420px] drop-shadow-md overflow-hidden relative">
-          <img src="/img/hero.jpg" alt="" className="w-full h-full object-cover" />
+          <img src="/svg/logo-ai.png" alt="AI illustration" className="w-full h-full object-cover object-center" />
 
           <div className="absolute top-4 left-4 px-4 py-2 rounded-md bg-white/40 backdrop-blur-md">
-            Interviews Copilot&copy;
+            Interview Copilot&copy;
           </div>
 
           <div className="hidden md:block absolute w-80 bottom-4 right-4 px-4 py-3 rounded-lg bg-white/70 backdrop-blur-md shadow">
-            <h2 className="text-neutral-800 font-semibold">Developer</h2>
+            <h2 className="text-neutral-800 font-semibold">AI Mock Interview</h2>
             <p className="text-sm text-neutral-600">
-              Practice real-world interview scenarios and sharpen your skills with instant feedback.
+              Practice real-world interview scenarios and sharpen your skills with instant AI feedback.
             </p>
 
             <Button className="mt-3 gap-2">
@@ -71,7 +71,7 @@ const HomePage = () => {
           <MarqueImg img="/img/logo/firebase.png" />
           <MarqueImg img="/img/logo/meet.png" />
           <MarqueImg img="/img/logo/zoom.png" />
-          <MarqueImg img="/img/logo/firebase.png" />
+          <MarqueImg img="/img/logo/react.png" />
           <MarqueImg img="/img/logo/microsoft.png" />
           <MarqueImg img="/img/logo/meet.png" />
           <MarqueImg img="/img/logo/tailwindcss.png" />
@@ -86,7 +86,7 @@ const HomePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
           <div className="col-span-1 md:col-span-3">
-            <img src="/img/office.jpg" alt="" className="w-full max-h-96 rounded-md object-cover" />
+            <img src="/img/office.jpg" alt="Office" className="w-full max-h-96 rounded-md object-cover" />
           </div>
 
           <div className="col-span-1 md:col-span-2 gap-8 max-h-96 min-h-96 w-full flex flex-col items-center justify-center text-center">
