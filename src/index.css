@@ -62,8 +62,14 @@
   * {
     @apply border-border;
   }
+  html {
+    @apply antialiased;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+  .container {
+    @apply max-w-6xl;
   }
   .text-outline {
     color: white;

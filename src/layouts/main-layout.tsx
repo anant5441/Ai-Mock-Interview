@@ -5,16 +5,13 @@ import { Footer } from "@/components/footer";
 
 export const MainLayout = () => {
     return (
-        <div className="flex flex-col h-screen">
-        {/* handler to store the user data */}
+        <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-muted/20">
         <Header />
-    
-        <Container className="flex-grow">
-            <main className="flex-grow">
-                <Outlet />
+        <Container className="flex-1">
+            <main className="py-6">
+            <Outlet />
             </main>
         </Container>
-
         <Footer />
         </div>
     );

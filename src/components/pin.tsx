@@ -19,9 +19,9 @@ interface InterviewPinProps {
 const InterviewPin = ({interview,onMockPage=false}:InterviewPinProps) => {
     const navigate = useNavigate();
     return (
-        <Card className="p-4 rounded-md shadow-none hover:shadow-md shadow-gray-100 cursor-pointer transition-all space-y-4 mb-5">
-            <CardTitle className="text-lg">{interview?.position}</CardTitle>
-            <CardDescription>{interview?.description}</CardDescription>
+        <Card className="group p-4 rounded-lg border shadow-none hover:shadow-md hover:border-neutral-200 transition-all space-y-4 mb-5">
+            <CardTitle className="text-lg line-clamp-1">{interview?.position}</CardTitle>
+            <CardDescription className="line-clamp-2">{interview?.description}</CardDescription>
             <div className="w-full flex items-center gap-2 flex-wrap">
                 {interview?.techStack.split(",").map((word, index) => (
                 <Badge
