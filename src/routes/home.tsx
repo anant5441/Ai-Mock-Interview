@@ -53,8 +53,7 @@ const HomePage = () => {
                     <div className="hidden md:block absolute w-80 bottom-4 right-4 px-4 py-2 rounded-md bg-white/60 backdrop-blur-md">
                     <h2 className="text-neutral-800 font-semibold">Developer</h2>
                     <p className="text-sm text-neutral-500">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-                    distinctio natus, quos voluptatibus magni sapiente.
+                    Get instant AI-generated interview questions tailored to for this role.
                     </p>
 
                     <Button className="mt-3">
