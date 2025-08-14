@@ -156,46 +156,11 @@ The application is fully responsive and works seamlessly on:
 
 ## 🚀 Deployment
 
-### Build for Production
-```bash
-pnpm build
-```
 
 ### Deploy to Firebase Hosting
 
-1. **Install Firebase CLI globally**
-   ```bash
-   npm install -g firebase-tools
-   ```
+Deployed Link :-https://ai-mock-interview-1a75a.web.app
 
-2. **Login to Firebase**
-   ```bash
-   firebase login
-   ```
-
-3. **Initialize Firebase in your project**
-   ```bash
-   firebase init hosting
-   ```
-   
-   **Configuration options:**
-   - Select your Firebase project
-   - Set public directory to: `dist`
-   - Configure as single-page app: `Yes`
-   - Don't overwrite `index.html`: `No`
-
-4. **Build your project**
-   ```bash
-   pnpm build
-   ```
-
-5. **Deploy to Firebase**
-   ```bash
-   firebase deploy
-   ```
-
-6. **Access your deployed app**
-   Your app will be available at: `https://your-project-id.web.app`
 
 ### Firebase Configuration Files
 
