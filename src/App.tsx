@@ -17,6 +17,7 @@ import MockLoadPage from "./routes/mock-load-page";
 import MockInterviewPage from "./routes/mock-interview-page";
 import Feedback from "./routes/feedback";
 import AnalyticsPage from "./routes/analytics";
+import CoverLetterPage from "./routes/cover-letter";
 
 
 const App = () => {
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="feedback/:interviewId" element={<Feedback />} />
           </Route>
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/cover-letter" element={<CoverLetterPage />} />
         </Route>
       </Routes>
     </Router>

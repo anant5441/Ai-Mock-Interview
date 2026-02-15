@@ -32,6 +32,32 @@ export const ToggleContainer = () => {
                 Take An Interview
                 </NavLink>
             )}
+            {userId && (
+                <NavLink
+                to={"/analytics"}
+                className={({ isActive }) =>
+                    cn(
+                    "text-base text-neutral-600 hover:text-neutral-900 transition-colors",
+                    isActive && "text-neutral-900 font-semibold"
+                    )
+                }
+                >
+                Analytics
+                </NavLink>
+            )}
+            {userId && (
+                <NavLink
+                to={"/cover-letter"}
+                className={({ isActive }) =>
+                    cn(
+                    "text-base text-neutral-600 hover:text-neutral-900 transition-colors",
+                    isActive && "text-neutral-900 font-semibold"
+                    )
+                }
+                >
+                Cover Letter Generator
+                </NavLink>
+            )}
             </nav>
         </SheetContent>
         </Sheet>

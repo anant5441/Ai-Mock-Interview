@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
 import Container from "@/components/container";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -33,7 +33,13 @@ import {
     Award,
     AlertTriangle,
     Loader,
+    Download,
+    FileText,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { exportInterviewDataAsCSV, exportInterviewDataAsPDF } from "@/lib/export-utils";
+import type { InterviewReportType } from "@/types/report";
+import { toast } from "sonner";
 
 /* ─── scroll reveal ─── */
 function useScrollReveal() {
@@ -238,7 +244,67 @@ const AnalyticsPage = () => {
         skillRadar,
         feedbackKeywords,
         sessionTimeline,
+        interviews,
+        answers,
     } = useAnalytics();
+
+    // Transform data for export
+    const exportData: InterviewReportType[] = useMemo(() => {
+        return interviews.map((interview) => {
+            const interviewAnswers = answers.filter((a) => a.mockIdRef === interview.id);
+            const avgRating =
+                interviewAnswers.length > 0
+                    ? interviewAnswers.reduce((sum, a) => sum + a.rating, 0) / interviewAnswers.length
+                    : 0;
+
+            return {
+                interviewId: interview.id,
+                position: interview.position,
+                techStack: interview.techStack,
+                experience: interview.experience,
+                createdAt: interview.createdAt?.toDate
+                    ? interview.createdAt.toDate().toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                      })
+                    : "Unknown",
+                averageRating: avgRating,
+                questions: interviewAnswers.map((answer) => ({
+                    question: answer.question,
+                    answer: answer.user_ans,
+                    rating: answer.rating,
+                    feedback: answer.feedback,
+                })),
+            };
+        });
+    }, [interviews, answers]);
+
+    const handleExportCSV = () => {
+        if (exportData.length === 0) {
+            toast.error("No data to export", {
+                description: "You need to complete at least one interview to export data.",
+            });
+            return;
+        }
+        exportInterviewDataAsCSV(exportData);
+        toast.success("Report downloaded successfully", {
+            description: "Your interview report has been exported as CSV.",
+        });
+    };
+
+    const handleExportPDF = () => {
+        if (exportData.length === 0) {
+            toast.error("No data to export", {
+                description: "You need to complete at least one interview to export data.",
+            });
+            return;
+        }
+        exportInterviewDataAsPDF(exportData);
+        toast.success("Report downloaded successfully", {
+            description: "Your interview report has been exported as PDF.",
+        });
+    };
 
     if (loading) {
         return (
@@ -266,23 +332,43 @@ const AnalyticsPage = () => {
             {/* ─── PERSONAL HEADER ─── */}
             <section className="relative z-10 pt-24 pb-12 md:pt-32 md:pb-16">
                 <Container>
-                    <div className="flex items-center gap-5 animate-fadeInUp">
-                        {user?.imageUrl && (
-                            <img
-                                src={user.imageUrl}
-                                alt={user.fullName || "User"}
-                                className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/20 shadow-lg shadow-black/40 object-cover"
-                            />
-                        )}
-                        <div>
-                            <p className="text-gray-400 text-sm">{greeting()}</p>
-                            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
-                                {user?.firstName || "User"}'s{" "}
-                                <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
-                                    Analytics
-                                </span>
-                            </h1>
-                            <p className="text-gray-500 text-sm mt-1">{user?.primaryEmailAddress?.emailAddress}</p>
+                    <div className="flex items-center justify-between gap-5 animate-fadeInUp">
+                        <div className="flex items-center gap-5">
+                            {user?.imageUrl && (
+                                <img
+                                    src={user.imageUrl}
+                                    alt={user.fullName || "User"}
+                                    className="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-white/20 shadow-lg shadow-black/40 object-cover"
+                                />
+                            )}
+                            <div>
+                                <p className="text-gray-400 text-sm">{greeting()}</p>
+                                <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+                                    {user?.firstName || "User"}'s{" "}
+                                    <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
+                                        Analytics
+                                    </span>
+                                </h1>
+                                <p className="text-gray-500 text-sm mt-1">{user?.primaryEmailAddress?.emailAddress}</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-3">
+                            <Button
+                                onClick={handleExportCSV}
+                                variant="outline"
+                                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                            >
+                                <Download className="w-4 h-4 mr-2" />
+                                Export CSV
+                            </Button>
+                            <Button
+                                onClick={handleExportPDF}
+                                variant="outline"
+                                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                            >
+                                <FileText className="w-4 h-4 mr-2" />
+                                Export PDF
+                            </Button>
                         </div>
                     </div>
                 </Container>

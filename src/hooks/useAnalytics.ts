@@ -294,5 +294,7 @@ export function useAnalytics() {
         skillRadar,
         feedbackKeywords,
         sessionTimeline,
+        interviews,
+        answers,
     };
 }
