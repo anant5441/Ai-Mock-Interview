@@ -50,6 +50,19 @@ const Header = () => {
                 Analytics
               </NavLink>
             )}
+            {userId && (
+              <NavLink
+                to={"https://resumeinsight-5441.streamlit.app/"}
+                className={({ isActive }) =>
+                  cn(
+                    "text-sm md:text-base text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors",
+                    isActive && "text-neutral-900 dark:text-white font-semibold"
+                  )
+                }
+              >
+                Resume Insights
+              </NavLink>
+            )}
           </nav>
 
           {/* Right side */}
