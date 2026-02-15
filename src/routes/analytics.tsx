@@ -256,7 +256,7 @@ const AnalyticsPage = () => {
     };
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
+        <div className="relative min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginTop: '-1.5rem', marginBottom: '-1.5rem', paddingTop: '0', paddingBottom: '0' }}>
             {/* ambient layers */}
             <div className="floating-blob floating-blob-1 top-[-8%] left-[-5%]" />
             <div className="floating-blob floating-blob-2 top-[45%] right-[-8%]" />

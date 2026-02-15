@@ -53,8 +53,8 @@ const App = () => {
               element={<MockInterviewPage />}
             />
             <Route path="feedback/:interviewId" element={<Feedback />} />
-            <Route path="analytics" element={<AnalyticsPage />} />
           </Route>
+          <Route path="/analytics" element={<AnalyticsPage />} />
         </Route>
       </Routes>
     </Router>
