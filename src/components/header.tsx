@@ -36,6 +36,19 @@ const Header = () => {
                 Take an interview
               </NavLink>
             )}
+            {userId && (
+              <NavLink
+                to={"/generate/analytics"}
+                className={({ isActive }) =>
+                  cn(
+                    "text-sm md:text-base text-neutral-600 hover:text-neutral-900 transition-colors",
+                    isActive && "text-neutral-900 font-semibold"
+                  )
+                }
+              >
+                Analytics
+              </NavLink>
+            )}
           </nav>
 
           {/* Right side */}

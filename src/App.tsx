@@ -16,6 +16,7 @@ import CreateEditPage from "./routes/create-edit-page";
 import MockLoadPage from "./routes/mock-load-page";
 import MockInterviewPage from "./routes/mock-interview-page";
 import Feedback from "./routes/feedback";
+import AnalyticsPage from "./routes/analytics";
 
 
 const App = () => {
@@ -52,6 +53,7 @@ const App = () => {
               element={<MockInterviewPage />}
             />
             <Route path="feedback/:interviewId" element={<Feedback />} />
+            <Route path="analytics" element={<AnalyticsPage />} />
           </Route>
         </Route>
       </Routes>
