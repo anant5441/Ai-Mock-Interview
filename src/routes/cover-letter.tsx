@@ -59,16 +59,24 @@ const CoverLetterPage = () => {
         }
     };
 
-    // MVP: Basic text extraction (for production, use pdf-parse library)
-    const extractTextFromPDF = async (_arrayBuffer: ArrayBuffer): Promise<string> => {
-        // This is a basic implementation. For production, install and use:
-        // npm install pdf-parse
-        // import pdf from 'pdf-parse';
-        // const data = await pdf(_arrayBuffer);
-        // return data.text;
+    // Extract text from PDF using pdfjs-dist
+    const extractTextFromPDF = async (arrayBuffer: ArrayBuffer): Promise<string> => {
+        const pdfjsLib = await import("pdfjs-dist");
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
 
-        // For now, return a placeholder that prompts user to paste resume text
-        return "PDF text extraction requires additional library. Please paste your resume text below or use a PDF parser library.";
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const textParts: string[] = [];
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            const pageText = content.items
+                .map((item: unknown) => (item as { str: string }).str)
+                .join(" ");
+            textParts.push(pageText);
+        }
+
+        return textParts.join("\n\n");
     };
 
     const handleGenerate = async () => {
