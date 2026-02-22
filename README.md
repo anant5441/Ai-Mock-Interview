@@ -589,11 +589,9 @@ Copyright (c) 2025 AI Mock Interview
 - [ ] **Advanced Analytics** — Comparative benchmarking against anonymized peer data
 - [ ] **Mobile App (React Native)** — Native mobile experience for on-the-go practice
 - [ ] **AI Body Language Analysis** — Webcam-based posture, eye-contact, and gesture feedback
-- [ ] **Export Reports** — Download PDF/CSV reports of interview performance history
 - [ ] **Integration with Job Boards** — Connect with LinkedIn, Indeed for role-specific prep
 - [ ] **Custom Question Banks** — Let users create and share curated question sets
 - [ ] **Timed Interview Mode** — Simulate time-boxed real interview conditions
-- [ ] **Resume Cover Letter Generator** — Auto-generate tailored cover letters from resume + JD
 
 ---
 
