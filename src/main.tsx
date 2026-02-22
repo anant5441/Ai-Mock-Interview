@@ -15,7 +15,7 @@ if (!PUBLISHABLE_KEY) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
         <App />
         <ToasterProvider />
