@@ -186,7 +186,7 @@ function GlowCard({
 /* ─── page ─── */
 const AboutPage = () => {
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
+        <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black text-gray-900 dark:text-white overflow-hidden">
             {/* floating blobs */}
             <div className="floating-blob floating-blob-1 top-[-10%] left-[-5%]" />
             <div className="floating-blob floating-blob-2 top-[40%] right-[-8%]" />
@@ -198,7 +198,7 @@ const AboutPage = () => {
             {/* ─── HERO ─── */}
             <section className="relative z-10 py-28 md:py-40 text-center">
                 <Container>
-                    <p className="text-sm tracking-[0.3em] uppercase text-gray-400 mb-4 animate-fadeInUp" style={{ animationDelay: "0.1s" }}>
+                    <p className="text-sm tracking-[0.3em] uppercase text-gray-500 dark:text-gray-400 mb-4 animate-fadeInUp" style={{ animationDelay: "0.1s" }}>
                         Get to know us
                     </p>
                     <h1
@@ -206,12 +206,12 @@ const AboutPage = () => {
                         style={{ animationDelay: "0.25s" }}
                     >
                         We Build the{" "}
-                        <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-300 dark:to-gray-500 bg-clip-text text-transparent">
                             Future
                         </span>
                     </h1>
                     <p
-                        className="mt-6 max-w-2xl mx-auto text-gray-400 text-lg md:text-xl animate-fadeInUp"
+                        className="mt-6 max-w-2xl mx-auto text-gray-500 dark:text-gray-400 text-lg md:text-xl animate-fadeInUp"
                         style={{ animationDelay: "0.45s" }}
                     >
                         Empowering professionals with AI-driven interview preparation,
@@ -233,7 +233,7 @@ const AboutPage = () => {
                         <h2 className="text-3xl md:text-5xl font-bold">
                             Our Core Pillars
                         </h2>
-                        <p className="mt-4 text-gray-400 max-w-xl mx-auto">
+                        <p className="mt-4 text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
                             The principles that drive every decision we make and every product
                             we ship.
                         </p>
@@ -262,11 +262,11 @@ const AboutPage = () => {
                         ].map((item) => (
                             <RevealSection key={item.title} delay={item.delay}>
                                 <GlowCard className="h-full text-center animate-float" animDelay={item.delay}>
-                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 mb-6 mx-auto">
+                                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-200/60 dark:bg-white/10 mb-6 mx-auto">
                                         {item.icon}
                                     </div>
                                     <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                                    <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+                                    <p className="text-gray-500 dark:text-gray-400 leading-relaxed">{item.desc}</p>
                                 </GlowCard>
                             </RevealSection>
                         ))}
@@ -299,14 +299,14 @@ const AboutPage = () => {
                             return (
                                 <RevealSection key={stat.label}>
                                     <div className="glass-card p-6 md:p-8 text-center">
-                                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/10 mb-4 animate-icon-bounce mx-auto">
+                                        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gray-200/60 dark:bg-white/10 mb-4 animate-icon-bounce mx-auto">
                                             {stat.icon}
                                         </div>
                                         <p className="text-3xl md:text-4xl font-bold">
                                             <span ref={countRef}>0</span>
                                             {stat.suffix}
                                         </p>
-                                        <p className="text-gray-400 text-sm mt-2">{stat.label}</p>
+                                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">{stat.label}</p>
                                     </div>
                                 </RevealSection>
                             );
@@ -323,7 +323,7 @@ const AboutPage = () => {
                             <h2 className="text-3xl md:text-4xl font-bold mb-6">
                                 Why Choose Us?
                             </h2>
-                            <p className="text-gray-400 leading-relaxed text-lg">
+                            <p className="text-gray-500 dark:text-gray-400 leading-relaxed text-lg">
                                 We combine the precision of advanced AI with human empathy to
                                 create preparation experiences that truly transform careers. Our
                                 platform analyses your strengths, identifies growth areas, and
@@ -333,7 +333,7 @@ const AboutPage = () => {
                             <div className="mt-8">
                                 <a
                                     href="/generate"
-                                    className="inline-block px-8 py-3 rounded-full bg-white text-black font-semibold magnetic-btn glow-border pulse-btn transition-all"
+                                    className="inline-block px-8 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-semibold magnetic-btn glow-border pulse-btn transition-all"
                                 >
                                     Start Practising Now →
                                 </a>

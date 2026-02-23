@@ -155,12 +155,12 @@ function ContactInfoCard({
                 onMouseMove={handleMouse}
                 className="glass-card card-glow-overlay p-8 text-center group"
             >
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-white/10 mb-5 mx-auto group-hover:animate-icon-bounce transition-transform">
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gray-200/60 dark:bg-white/10 mb-5 mx-auto group-hover:animate-icon-bounce transition-transform">
                     {icon}
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{title}</h3>
                 {lines.map((l) => (
-                    <p key={l} className="text-gray-400 text-sm">
+                    <p key={l} className="text-gray-500 dark:text-gray-400 text-sm">
                         {l}
                     </p>
                 ))}
@@ -186,10 +186,10 @@ function FormInput({
     textarea?: boolean;
 }) {
     const base =
-        "w-full px-4 py-3 rounded-xl input-glow text-white placeholder-gray-500 text-sm md:text-base";
+        "w-full px-4 py-3 rounded-xl input-glow text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 text-sm md:text-base";
     return (
         <div>
-            <label className="block text-sm text-gray-300 mb-2 font-medium">
+            <label className="block text-sm text-gray-600 dark:text-gray-300 mb-2 font-medium">
                 {label}
             </label>
             {textarea ? (
@@ -239,7 +239,7 @@ const ContactPage = () => {
     };
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
+        <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black text-gray-900 dark:text-white overflow-hidden">
             {/* blobs */}
             <div className="floating-blob floating-blob-1 top-[-5%] left-[10%]" />
             <div className="floating-blob floating-blob-2 bottom-[20%] right-[-8%]" />
@@ -252,7 +252,7 @@ const ContactPage = () => {
             <section className="relative z-10 py-28 md:py-40 text-center">
                 <Container>
                     <p
-                        className="text-sm tracking-[0.3em] uppercase text-gray-400 mb-4 animate-fadeInUp"
+                        className="text-sm tracking-[0.3em] uppercase text-gray-500 dark:text-gray-400 mb-4 animate-fadeInUp"
                         style={{ animationDelay: "0.1s" }}
                     >
                         Get in touch
@@ -262,12 +262,12 @@ const ContactPage = () => {
                         style={{ animationDelay: "0.25s" }}
                     >
                         Contact{" "}
-                        <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-300 dark:to-gray-500 bg-clip-text text-transparent">
                             Us
                         </span>
                     </h1>
                     <p
-                        className="mt-6 max-w-2xl mx-auto text-gray-400 text-lg md:text-xl animate-fadeInUp"
+                        className="mt-6 max-w-2xl mx-auto text-gray-500 dark:text-gray-400 text-lg md:text-xl animate-fadeInUp"
                         style={{ animationDelay: "0.45s" }}
                     >
                         Have a question, partnership idea, or just want to say hello? We'd
@@ -297,7 +297,7 @@ const ContactPage = () => {
                                 <h2 className="text-2xl md:text-3xl font-bold mb-2">
                                     Send Us a Message
                                 </h2>
-                                <p className="text-gray-400 text-sm mb-6">
+                                <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
                                     Fill out the form and our team will respond within 24 hours.
                                 </p>
 
@@ -334,7 +334,7 @@ const ContactPage = () => {
 
                                 <button
                                     type="submit"
-                                    className="w-full md:w-auto px-10 py-3 rounded-full bg-white text-black font-semibold magnetic-btn glow-border pulse-btn transition-all flex items-center justify-center gap-2"
+                                    className="w-full md:w-auto px-10 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-semibold magnetic-btn glow-border pulse-btn transition-all flex items-center justify-center gap-2"
                                 >
                                     {submitted ? (
                                         "Message Sent ✓"

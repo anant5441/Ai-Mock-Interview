@@ -153,9 +153,9 @@ function StatCard({ icon, label, value, suffix = "", decimals = 0, delay = "" }:
     return (
         <RevealSection delay={delay}>
             <div className="glass-card card-glow-overlay p-6 text-center animate-float group" style={{ animationDelay: delay.replace("stagger-", "0.") + "s" }}>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/10 mb-4 mx-auto group-hover:animate-icon-bounce">{icon}</div>
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gray-200/60 dark:bg-white/10 mb-4 mx-auto group-hover:animate-icon-bounce">{icon}</div>
                 <p className="text-3xl md:text-4xl font-bold"><span ref={countRef}>0</span>{suffix}</p>
-                <p className="text-gray-400 text-sm mt-1">{label}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{label}</p>
             </div>
         </RevealSection>
     );
@@ -168,9 +168,9 @@ function SkillStatCard({ icon, label, value, delay = "" }: {
     return (
         <RevealSection delay={delay}>
             <div className="glass-card card-glow-overlay p-6 text-center animate-float group" style={{ animationDelay: delay.replace("stagger-", "0.") + "s" }}>
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-white/10 mb-4 mx-auto group-hover:animate-icon-bounce">{icon}</div>
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gray-200/60 dark:bg-white/10 mb-4 mx-auto group-hover:animate-icon-bounce">{icon}</div>
                 <p className="text-xl md:text-2xl font-bold capitalize truncate">{value}</p>
-                <p className="text-gray-400 text-sm mt-1">{label}</p>
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{label}</p>
             </div>
         </RevealSection>
     );
@@ -264,10 +264,10 @@ const AnalyticsPage = () => {
                 experience: interview.experience,
                 createdAt: interview.createdAt?.toDate
                     ? interview.createdAt.toDate().toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                      })
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })
                     : "Unknown",
                 averageRating: avgRating,
                 questions: interviewAnswers.map((answer) => ({
@@ -308,7 +308,7 @@ const AnalyticsPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
+            <div className="min-h-screen flex items-center justify-center">
                 <Loader className="w-8 h-8 animate-spin text-gray-400" />
             </div>
         );
@@ -322,7 +322,7 @@ const AnalyticsPage = () => {
     };
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginTop: '-1.5rem', marginBottom: '-1.5rem', paddingTop: '0', paddingBottom: '0' }}>
+        <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black text-gray-900 dark:text-white overflow-hidden" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)', marginTop: '-1.5rem', marginBottom: '-1.5rem', paddingTop: '0', paddingBottom: '0' }}>
             {/* ambient layers */}
             <div className="floating-blob floating-blob-1 top-[-8%] left-[-5%]" />
             <div className="floating-blob floating-blob-2 top-[45%] right-[-8%]" />
@@ -342,10 +342,10 @@ const AnalyticsPage = () => {
                                 />
                             )}
                             <div>
-                                <p className="text-gray-400 text-sm">{greeting()}</p>
+                                <p className="text-gray-500 dark:text-gray-400 text-sm">{greeting()}</p>
                                 <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
                                     {user?.firstName || "User"}'s{" "}
-                                    <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
+                                    <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-300 dark:to-gray-500 bg-clip-text text-transparent">
                                         Analytics
                                     </span>
                                 </h1>
@@ -556,8 +556,8 @@ const AnalyticsPage = () => {
                     <RevealSection>
                         <div className="glass-card p-10 md:p-14 text-center max-w-2xl mx-auto">
                             <h2 className="text-2xl md:text-3xl font-bold mb-3">Keep Improving</h2>
-                            <p className="text-gray-400 mb-6">Take another mock interview and watch your scores climb.</p>
-                            <a href="/generate/create" className="inline-block px-8 py-3 rounded-full bg-white text-black font-semibold magnetic-btn glow-border pulse-btn transition-all">
+                            <p className="text-gray-500 dark:text-gray-400 mb-6">Take another mock interview and watch your scores climb.</p>
+                            <a href="/generate/create" className="inline-block px-8 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-semibold magnetic-btn glow-border pulse-btn transition-all">
                                 Start New Interview →
                             </a>
                         </div>

@@ -165,7 +165,7 @@ function ServiceCard({
                 className="glass-card card-glow-overlay p-8 h-full flex flex-col group cursor-default"
             >
                 {/* icon */}
-                <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-6 group-hover:animate-icon-bounce transition-transform">
+                <div className="w-14 h-14 rounded-2xl bg-gray-200/60 dark:bg-white/10 flex items-center justify-center mb-6 group-hover:animate-icon-bounce transition-transform">
                     {icon}
                 </div>
 
@@ -173,10 +173,10 @@ function ServiceCard({
                 <h3 className="text-xl font-semibold mb-3">{title}</h3>
 
                 {/* description */}
-                <p className="text-gray-400 leading-relaxed flex-1">{desc}</p>
+                <p className="text-gray-500 dark:text-gray-400 leading-relaxed flex-1">{desc}</p>
 
                 {/* hover link */}
-                <div className="mt-6 flex items-center gap-2 text-sm text-gray-500 group-hover:text-white transition-colors">
+                <div className="mt-6 flex items-center gap-2 text-sm text-gray-400 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
                     <span className="link-hover">Learn more</span>
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -222,7 +222,7 @@ const services = [
 /* ─── page ─── */
 const ServicesPage = () => {
     return (
-        <div className="relative min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black text-white overflow-hidden">
+        <div className="relative min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-black text-gray-900 dark:text-white overflow-hidden">
             {/* blobs */}
             <div className="floating-blob floating-blob-1 top-[-8%] right-[-6%]" />
             <div className="floating-blob floating-blob-2 bottom-[15%] left-[-5%]" />
@@ -235,7 +235,7 @@ const ServicesPage = () => {
             <section className="relative z-10 py-28 md:py-40 text-center">
                 <Container>
                     <p
-                        className="text-sm tracking-[0.3em] uppercase text-gray-400 mb-4 animate-fadeInUp"
+                        className="text-sm tracking-[0.3em] uppercase text-gray-500 dark:text-gray-400 mb-4 animate-fadeInUp"
                         style={{ animationDelay: "0.1s" }}
                     >
                         What we offer
@@ -245,12 +245,12 @@ const ServicesPage = () => {
                         style={{ animationDelay: "0.25s" }}
                     >
                         Our{" "}
-                        <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-300 dark:to-gray-500 bg-clip-text text-transparent">
                             Services
                         </span>
                     </h1>
                     <p
-                        className="mt-6 max-w-2xl mx-auto text-gray-400 text-lg md:text-xl animate-fadeInUp"
+                        className="mt-6 max-w-2xl mx-auto text-gray-500 dark:text-gray-400 text-lg md:text-xl animate-fadeInUp"
                         style={{ animationDelay: "0.45s" }}
                     >
                         A suite of AI-powered tools designed to accelerate your career —
@@ -289,13 +289,13 @@ const ServicesPage = () => {
                             <h2 className="text-3xl md:text-4xl font-bold mb-4">
                                 Ready to Level Up?
                             </h2>
-                            <p className="text-gray-400 mb-8 text-lg max-w-xl mx-auto">
+                            <p className="text-gray-500 dark:text-gray-400 mb-8 text-lg max-w-xl mx-auto">
                                 Join hundreds of thousands of professionals who transformed
                                 their careers with our AI platform.
                             </p>
                             <a
                                 href="/generate"
-                                className="inline-block px-8 py-3 rounded-full bg-white text-black font-semibold magnetic-btn glow-border pulse-btn transition-all"
+                                className="inline-block px-8 py-3 rounded-full bg-gray-900 dark:bg-white text-white dark:text-black font-semibold magnetic-btn glow-border pulse-btn transition-all"
                             >
                                 Get Started Free →
                             </a>
