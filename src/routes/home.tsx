@@ -1,11 +1,14 @@
 import Container from "@/components/container";
 import { MarqueImg } from "@/components/marquee-img";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, BrainCircuit, FileSearch, BarChart3, FileText, MessageSquare, Lock } from "lucide-react";
 import Marquee from "react-fast-marquee";
 import { Link } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
 
 const HomePage = () => {
+     const { userId } = useAuth();
+
      return <div className="flex-col w-full pb-24">
           <Container>
                <div className="my-8">
@@ -105,6 +108,57 @@ const HomePage = () => {
                     </div>
                </div>
           </Container>
+
+          {/* ─── FEATURES SECTION (visible when NOT logged in) ─── */}
+          {!userId && (
+               <Container className="py-12 md:py-16">
+                    <div className="text-center mb-10">
+                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-medium mb-4">
+                              <Lock className="w-3.5 h-3.5" />
+                              Sign in to unlock
+                         </div>
+                         <h2 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white">
+                              Powerful Features Await You
+                         </h2>
+                         <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
+                              Create an account or sign in to access our full suite of AI-powered career tools.
+                         </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                         {[
+                              { icon: <BrainCircuit className="w-6 h-6" />, title: "AI Mock Interviews", desc: "Practice with realistic AI-generated questions tailored to your role and experience level." },
+                              { icon: <FileSearch className="w-6 h-6" />, title: "Resume Insights", desc: "Get AI-powered analysis of your resume for ATS compatibility and keyword optimization." },
+                              { icon: <BarChart3 className="w-6 h-6" />, title: "Performance Analytics", desc: "Track your progress with detailed charts, skill radar, and improvement trends." },
+                              { icon: <FileText className="w-6 h-6" />, title: "Cover Letter Generator", desc: "Generate personalized cover letters matched to any job description in seconds." },
+                              { icon: <MessageSquare className="w-6 h-6" />, title: "Community Feedback", desc: "Share and read feedback from other candidates to improve together." },
+                              { icon: <Sparkles className="w-6 h-6" />, title: "AI-Powered Feedback", desc: "Receive detailed scoring and actionable feedback on every answer you give." },
+                         ].map((feature) => (
+                              <div
+                                   key={feature.title}
+                                   className="group relative rounded-2xl border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:hover:shadow-black/30"
+                              >
+                                   <div className="w-11 h-11 rounded-xl bg-indigo-100 dark:bg-indigo-500/15 flex items-center justify-center mb-4 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform">
+                                        {feature.icon}
+                                   </div>
+                                   <h3 className="font-semibold text-gray-900 dark:text-white mb-1.5">{feature.title}</h3>
+                                   <p className="text-sm text-muted-foreground leading-relaxed">{feature.desc}</p>
+                              </div>
+                         ))}
+                    </div>
+
+                    <div className="mt-10 text-center">
+                         <Link to="/signin">
+                              <Button size="lg" className="px-8 text-base">
+                                   Sign In to Get Started <Sparkles className="ml-2 w-4 h-4" />
+                              </Button>
+                         </Link>
+                         <p className="mt-3 text-xs text-muted-foreground">
+                              Free to use • No credit card required
+                         </p>
+                    </div>
+               </Container>
+          )}
      </div>;
 };
 
