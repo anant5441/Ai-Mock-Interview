@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Firebase](https://img.shields.io/badge/Firebase-11.10-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
-[![Gemini AI](https://img.shields.io/badge/Gemini_2.0-Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Gemini AI](https://img.shields.io/badge/Gemini_2.5-Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 [![Deployed on Firebase](https://img.shields.io/badge/Live-Demo-FF5722?style=for-the-badge&logo=firebase&logoColor=white)](https://ai-mock-interview-1a75a.web.app)
 
@@ -22,7 +22,7 @@
 
 ## 📖 Project Overview
 
-**AI Mock Interview** is a cutting-edge web application that simulates real-world job interviews using Google's Gemini 2.0 Flash AI. Users can generate role-specific questions, practice with webcam and microphone, receive instant AI-powered feedback with ratings, and track their growth over time through a rich analytics dashboard.
+**AI Mock Interview** is a cutting-edge web application that simulates real-world job interviews using Google's Gemini 2.5 Flash AI. Users can generate role-specific questions, practice with webcam and microphone, receive instant AI-powered feedback with ratings, track their growth over time through a rich analytics dashboard, generate AI cover letters, and share community feedback.
 
 ### Why AI Mock Interview?
 
@@ -37,14 +37,17 @@
 
 ## ✨ Features
 
-- **🤖 AI-Powered Question Generation** — Gemini 2.0 Flash creates tailored questions based on position, tech stack, and experience level
+- **🤖 AI-Powered Question Generation** — Gemini 2.5 Flash creates tailored questions based on position, tech stack, and experience level
 - **🎤 Speech-to-Text Recording** — Speak your answers naturally; they're transcribed and analyzed in real time
 - **📹 Webcam Integration** — Practice with video to simulate a real interview environment
-- **📊 Performance Analytics** — Interactive charts (line, bar, radar), stat cards, tag clouds, and trend analysis
+- **📊 Performance Analytics** — Interactive charts (line, bar, radar), stat cards, tag clouds, and trend analysis with CSV/PDF export
 - **🎯 Instant AI Feedback** — Get a 1–10 rating and actionable improvement suggestions for every answer
 - **📄 Resume Insights** — AI-powered resume analysis with ATS compatibility scoring, job description matching, Q&A on your resume, and keyword optimization ([Launch App](https://resumeinsight-5441.streamlit.app/))
+- **✉️ Cover Letter Generator** — AI-generated personalized cover letters from your resume (PDF upload with `pdfjs-dist`) and job description
+- **💬 Community Feedback** — Firebase-powered feedback system where authenticated users can submit and view community reviews with glassmorphism 3D cards
 - **🔐 Secure Authentication** — Clerk-powered sign-up/sign-in with protected route guards
-- **🌙 Dark / Light Mode** — Full theme toggle with `next-themes` integration
+- **🌙 Dark / Light Mode** — Full theme toggle across all pages (home, about, services, contact, analytics, feedback) with `next-themes` integration
+- **🏠 Smart Landing Page** — Non-logged-in users see a feature showcase with sign-in CTA; logged-in users see the action-ready interface
 - **📱 Fully Responsive** — Optimized for desktop, tablet, and mobile devices
 - **🚀 Firebase Hosting** — One-click deployment with SPA rewrite support
 - **🎨 Premium UI** — Glassmorphism, particle backgrounds, scroll-reveal animations, and smooth micro-interactions
@@ -70,9 +73,12 @@
 | Service | Purpose |
 |---|---|
 | [Firebase Firestore](https://firebase.google.com/docs/firestore) | NoSQL database for interviews, answers & analytics |
-| [Google Generative AI (Gemini 2.0 Flash)](https://ai.google.dev/) | AI question generation & answer evaluation |
+| [Google Generative AI (Gemini 2.5 Flash)](https://ai.google.dev/) | AI question generation, answer evaluation & cover letter generation |
 | [Clerk](https://clerk.com/) | Authentication, user management & protected routes |
 | [Firebase Hosting](https://firebase.google.com/docs/hosting) | SPA deployment with CDN distribution |
+| [Python](https://www.python.org/) | Backend language for Resume Insights service |
+| [Streamlit](https://streamlit.io/) | Web framework for the Resume Insights app |
+| [RAG Pipeline (LangChain)](https://www.langchain.com/) | Retrieval-Augmented Generation for resume Q&A and context-aware analysis |
 | [Resume Insights (Streamlit)](https://resumeinsight-5441.streamlit.app/) | External AI-powered resume analysis & ATS checking |
 
 ### Key Libraries
@@ -83,6 +89,7 @@
 | `react-hook-form` + `zod` | Form handling with schema validation |
 | `react-hook-speech-to-text` | Browser speech recognition integration |
 | `react-webcam` | Webcam capture for video simulation |
+| `pdfjs-dist` | Browser-based PDF text extraction for resume parsing |
 | `sonner` | Elegant toast notifications |
 | `react-fast-marquee` | Animated marquee components |
 | `next-themes` | Dark / light theme toggling |
@@ -202,6 +209,7 @@ graph TB
     subgraph Data["📦 Firestore Collections"]
         Interviews["interviews"]
         UserAnswers["userAnswers"]
+        FeedbackCol["feedback"]
     end
 
     UI --> Router
@@ -224,6 +232,7 @@ graph TB
 
     Firestore --> Interviews
     Firestore --> UserAnswers
+    Firestore --> FeedbackCol
     UserAnswers -->|"Fetch Data"| Charts
 
     Client -->|"Deploy"| Hosting
@@ -235,10 +244,18 @@ graph TB
         ResumeQA["Resume Q&A"]
     end
 
+    subgraph CoverLetter["✉️ Cover Letter Generator"]
+        PDFParse["PDF Resume Parsing<br/>(pdfjs-dist)"]
+        CLGen["AI Cover Letter<br/>Generation"]
+    end
+
     Router -->|"External Link"| ResumeApp
     ResumeUpload --> ATSCheck
     ResumeUpload --> JDMatch
     ResumeUpload --> ResumeQA
+    Router --> CoverLetter
+    PDFParse --> CLGen
+    CLGen -->|"Gemini AI"| Gemini
 ```
 
 ### Application Flow
@@ -247,6 +264,7 @@ graph TB
 flowchart LR
     A["🏠 Landing Page"] --> B{"Authenticated?"}
     B -->|No| C["🔑 Sign In / Sign Up<br/>(Clerk)"]
+    B -->|No| F2["🔒 Feature Showcase<br/>(Sign In CTA)"]
     C --> B
     B -->|Yes| D["📋 Dashboard"]
     D --> E["➕ Create Interview"]
@@ -259,6 +277,10 @@ flowchart LR
     D --> K["📄 Resume Insights"]
     K --> L["ATS Score + JD Match + Q&A"]
     L --> D
+    D --> M["✉️ Cover Letter Generator"]
+    M --> D
+    D --> N["💬 Community Feedback"]
+    N --> D
 ```
 
 ---
@@ -302,8 +324,13 @@ Ai-Mock-Interview/
 ├── src/
 │   ├── components/             # Reusable UI components
 │   │   ├── ui/                 # Shadcn-style base components (Button, Input, etc.)
-│   │   ├── header.tsx          # App navigation header
-│   │   ├── footer.tsx          # App footer
+│   │   ├── feedback/           # Feedback feature components
+│   │   │   ├── FeedbackForm.tsx    # Zod-validated feedback form
+│   │   │   ├── FeedbackCard.tsx    # 3D glassmorphism feedback card
+│   │   │   └── FeedbackList.tsx    # Responsive feedback grid
+│   │   ├── header.tsx          # App navigation header (auth-aware links)
+│   │   ├── footer.tsx          # App footer (auth-aware service links)
+│   │   ├── theme-toggle.tsx    # Dark / Light mode toggle button
 │   │   ├── form-mock-interview.tsx  # Interview creation form
 │   │   ├── record-answer.tsx   # Webcam + STT answer recording
 │   │   ├── question-section.tsx # Question display panel
@@ -317,15 +344,15 @@ Ai-Mock-Interview/
 │   │   └── useAnalytics.ts     # Analytics data fetching hook
 │   ├── layouts/
 │   │   ├── auth-layout.tsx     # Authentication pages layout
-│   │   ├── main-layout.tsx     # Authenticated main layout
+│   │   ├── main-layout.tsx     # Authenticated main layout (dark mode aware)
 │   │   ├── protected-layout.tsx # Route protection wrapper
-│   │   └── public-layout.tsx   # Public pages layout
+│   │   └── public-layout.tsx   # Public pages layout (dark mode aware)
 │   ├── lib/
 │   │   ├── helper.ts           # Route definitions & helpers
 │   │   └── utils.ts            # Utility functions (cn, etc.)
 │   ├── provider/               # Context providers (theme, etc.)
 │   ├── routes/
-│   │   ├── home.tsx            # Landing page
+│   │   ├── home.tsx            # Landing page (with feature showcase for guests)
 │   │   ├── about.tsx           # About page
 │   │   ├── services.tsx        # Services page
 │   │   ├── contact.tsx         # Contact page
@@ -334,15 +361,18 @@ Ai-Mock-Interview/
 │   │   ├── mock-load-page.tsx  # Interview loading/preparation
 │   │   ├── mock-interview-page.tsx # Live interview session
 │   │   ├── feedback.tsx        # Post-interview feedback
+│   │   ├── user-feedback.tsx   # Community feedback page (Firestore-backed)
 │   │   ├── analytics.tsx       # Analytics dashboard
+│   │   ├── cover-letter.tsx    # AI Cover Letter Generator (PDF parsing)
 │   │   ├── sign-in.tsx         # Sign-in page
 │   │   └── sign-up.tsx         # Sign-up page
 │   ├── scripts/
 │   │   └── index.ts            # Gemini AI chat session setup
-│   ├── types/                  # TypeScript type definitions
+│   ├── types/
+│   │   └── feedback.ts         # UserFeedback TypeScript interface
 │   ├── App.tsx                 # Root component with routing
-│   ├── main.tsx                # App entry point
-│   └── index.css               # Global styles & Tailwind base
+│   ├── main.tsx                # App entry point (ThemeProvider wrapped)
+│   └── index.css               # Global styles, Tailwind base & theme-adaptive glass-card
 ├── .env                        # Environment variables (not committed)
 ├── firebase.json               # Firebase Hosting config
 ├── tailwind.config.js          # Tailwind CSS configuration
@@ -423,16 +453,21 @@ Ai-Mock-Interview/
 
 | Feature | Status | Description |
 |---|:---:|---|
-| AI Question Generation | ✅ | Gemini 2.0 Flash generates role-specific questions |
+| AI Question Generation | ✅ | Gemini 2.5 Flash generates role-specific questions |
 | Speech-to-Text | ✅ | Web Speech API with real-time transcription |
 | Webcam Recording | ✅ | Live video feed during interview practice |
 | AI Answer Evaluation | ✅ | Instant feedback with 1–10 rating scale |
-| Performance Analytics | ✅ | Line, bar charts + tag clouds via Recharts |
+| Performance Analytics | ✅ | Line, bar charts, radar, tag clouds + CSV/PDF export |
+| AI Cover Letter Generator | ✅ | Upload resume PDF + paste JD → AI-generated cover letter |
+| PDF Resume Parsing | ✅ | Browser-based PDF text extraction with pdfjs-dist |
+| Community Feedback | ✅ | Firestore-backed feedback with glassmorphism 3D cards |
 | Resume ATS Score Check | ✅ | AI-powered ATS compatibility analysis |
 | Resume Q&A | ✅ | Ask questions about your uploaded resume |
 | Job Description Matching | ✅ | Compare resume against any job posting |
 | Keyword Optimization | ✅ | AI identifies missing resume keywords |
-| Dark / Light Mode | ✅ | Theme toggle with system preference support |
+| Dark / Light Mode | ✅ | Full theme toggle across all pages (home, about, services, contact, analytics) |
+| Auth-Aware Navigation | ✅ | Header & footer links adapt based on login state |
+| Guest Feature Showcase | ✅ | Non-logged-in users see features + sign-in CTA on home page |
 | Responsive Design | ✅ | Mobile, tablet, and desktop optimized |
 | Firebase Hosting | ✅ | Deployed with SPA rewrites |
 | Multi-language Support | 🔜 | Planned for future release |
@@ -471,7 +506,7 @@ Ai-Mock-Interview/
 
 | Parameter | Value | Description |
 |---|---|---|
-| `model` | `gemini-2.0-flash` | Fast, efficient model for real-time Q&A |
+| `model` | `gemini-2.5-flash` | Fast, efficient model for real-time Q&A & cover letter generation |
 | `temperature` | `1` | Controls response randomness (0–2) |
 | `topP` | `0.95` | Nucleus sampling threshold |
 | `topK` | `40` | Top-K sampling limit |
@@ -580,7 +615,6 @@ Copyright (c) 2025 AI Mock Interview
 ---
 
 ## 🔮 Future Roadmap
-
 - [ ] **Resume-Based Question Generation** — Generate interview questions directly from uploaded resume content
 - [ ] **Multi-language Interview Support** — Practice in languages beyond English
 - [ ] **Video Playback & Review** — Record and replay interview sessions with annotations
