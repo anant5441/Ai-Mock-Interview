@@ -1,9 +1,9 @@
 import { useAuth } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import useSpeechToText, { type ResultType } from "react-hook-speech-to-text";
 import { CircleStop, Loader, Mic, RefreshCw, Save, Video, VideoOff, WebcamIcon } from "lucide-react";
-import Webcam from "react-webcam"; 
+import Webcam from "react-webcam";
 import { TooltipButton } from "./tooltip-button";
 import { toast } from "sonner";
 import { chatSession } from "@/scripts";
@@ -29,6 +29,7 @@ const RecordAnswer = ({
   setIsWebCam,
 }: RecordAnswerProps) => {
   const {
+    error,
     interimResult,
     isRecording,
     results,
@@ -37,6 +38,10 @@ const RecordAnswer = ({
   } = useSpeechToText({
     continuous: true,
     useLegacyResults: false,
+    speechRecognitionProperties: {
+      lang: "en-US",
+      interimResults: true,
+    },
   });
   const [userAnswer, setUserAnswer] = useState("");
   const [isAiGenerating, setIsAiGenerating] = useState(false);
@@ -46,9 +51,31 @@ const RecordAnswer = ({
 
   const { userId } = useAuth();
   const { interviewId } = useParams();
+  const isIntentionalStopRef = useRef(false);
+
+  // Show error toast when speech recognition fails
+  useEffect(() => {
+    if (error) {
+      toast.error("Speech Recognition Error", {
+        description: error,
+      });
+    }
+  }, [error]);
+
+  // Detect unexpected recording stop (e.g. Chrome auto-stop after silence)
+  useEffect(() => {
+    if (!isRecording && !isIntentionalStopRef.current && userAnswer.length > 0) {
+      toast.info("Recording stopped", {
+        description:
+          "Speech recognition stopped automatically. Click the mic button to continue recording.",
+      });
+    }
+    isIntentionalStopRef.current = false;
+  }, [isRecording]);
 
   const recordUserAnswer = async () => {
     if (isRecording) {
+      isIntentionalStopRef.current = true;
       stopSpeechToText();
 
       if (userAnswer?.length < 30) {
@@ -64,10 +91,16 @@ const RecordAnswer = ({
       );
 
       setAiResult(aiResult);
-    }
-      else{
+    } else {
+      try {
         startSpeechToText();
+      } catch (e) {
+        toast.error("Could not start recording", {
+          description:
+            "Please make sure you are using Google Chrome and have granted microphone permissions.",
+        });
       }
+    }
   };
 
   const cleanJsonResponse = (responseText: string) => {
@@ -89,7 +122,7 @@ const RecordAnswer = ({
     qst: string,
     qstAns: string,
     userAns: string
-  ): Promise<AIResponse> =>{
+  ): Promise<AIResponse> => {
     setIsAiGenerating(true);
     const prompt = `
       Question: "${qst}"
@@ -118,8 +151,20 @@ const RecordAnswer = ({
 
   const recordNewAnswer = () => {
     setUserAnswer("");
+    setAiResult(null);
+    isIntentionalStopRef.current = true;
     stopSpeechToText();
-    startSpeechToText();
+    // Small delay to allow recognition to fully stop before restarting
+    setTimeout(() => {
+      try {
+        startSpeechToText();
+      } catch (e) {
+        toast.error("Could not restart recording", {
+          description:
+            "Please make sure you are using Google Chrome and have granted microphone permissions.",
+        });
+      }
+    }, 300);
   };
 
   const saveUserAnswer = async () => {
@@ -165,6 +210,7 @@ const RecordAnswer = ({
       }
 
       setUserAnswer("");
+      setAiResult(null);
       stopSpeechToText();
     } catch (error) {
       toast("Error", {
@@ -245,8 +291,8 @@ const RecordAnswer = ({
           onClick={() => setOpen(!open)}
           disbaled={!aiResult}
         />
-        </div>
-        <div className="w-full mt-4 p-4 border rounded-md bg-gray-50">
+      </div>
+      <div className="w-full mt-4 p-4 border rounded-md bg-gray-50">
         <h2 className="text-lg font-semibold">Your Answer:</h2>
 
         <p className="text-sm mt-2 text-gray-700 whitespace-normal">
