@@ -19,6 +19,9 @@ import Feedback from "./routes/feedback";
 import AnalyticsPage from "./routes/analytics";
 import CoverLetterPage from "./routes/cover-letter";
 import UserFeedbackPage from "./routes/user-feedback";
+import QuestionBanksPage from "./routes/question-banks";
+import CreateBankPage from "./routes/create-bank";
+import BankDetailsPage from "./routes/bank-details";
 
 
 const App = () => {
@@ -59,6 +62,9 @@ const App = () => {
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/cover-letter" element={<CoverLetterPage />} />
           <Route path="/feedback" element={<UserFeedbackPage />} />
+          <Route path="/question-banks" element={<QuestionBanksPage />} />
+          <Route path="/question-banks/create" element={<CreateBankPage />} />
+          <Route path="/question-banks/:bankId" element={<BankDetailsPage />} />
         </Route>
       </Routes>
     </Router>
