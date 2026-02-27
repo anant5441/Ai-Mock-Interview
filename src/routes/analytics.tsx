@@ -496,7 +496,7 @@ const AnalyticsPage = () => {
                         {skillRadar.length > 0 ? (
                             <ResponsiveContainer width="100%" height={360}>
                                 <RadarChart cx="50%" cy="50%" outerRadius="75%" data={skillRadar}>
-                                    <PolarGrid stroke="rgba(255,255,255,0.1)" />
+                                    <PolarGrid stroke="rgba(128, 75, 75, 0.1)" />
                                     <PolarAngleAxis dataKey="skill" tick={{ fill: "#9ca3af", fontSize: 11 }} />
                                     <PolarRadiusAxis angle={30} domain={[0, 10]} tick={{ fill: "#6b7280", fontSize: 10 }} />
                                     <Radar name="Score" dataKey="score" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.25} animationDuration={1500} />
