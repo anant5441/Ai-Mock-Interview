@@ -648,3 +648,247 @@ Copyright (c) 2025 AI Mock Interview
 [⬆ Back to Top](#-ai-mock-interview-platform)
 
 </div>
+
+---
+
+## 🏗️ System Architecture
+
+The architecture follows a modern serverless approach, separating the client-side rendering from the database and authentication providers, while integrating external AI services for heavy lifting.
+
+```mermaid
+graph TB
+    subgraph Client["🖥️ Client (React + Vite)"]
+        UI["UI Components & Forms"]
+        Router["React Router"]
+        Media["Webcam & Speech-to-Text"]
+        Dashboard["Analytics Dashboard (Recharts)"]
+    end
+
+    subgraph Auth["🔐 Authentication"]
+        Clerk["Clerk Auth"]
+    end
+
+    subgraph Database["☁️ Firebase Services"]
+        Firestore["Cloud Firestore (NoSQL)"]
+        Hosting["Firebase Hosting"]
+    end
+
+    subgraph AIEngine["🤖 AI Services"]
+        Gemini["Google Gemini 2.5 Flash API"]
+    end
+
+    subgraph External["External Services"]
+        ResumeApp["Resume Insights (Streamlit)"]
+    end
+
+    %% Connections
+    UI --> Router
+    Router --> Clerk
+    Router --> Firestore
+    Router --> Gemini
+    UI --> Media
+    Dashboard --> Firestore
+    
+    %% Data Flow
+    UI -- "Creates Interview/Questions" --> Gemini
+    Gemini -- "Returns Q&A" --> Firestore
+    Media -- "User Voice Answer" --> Gemini
+    Gemini -- "Returns Rating/Feedback" --> Firestore
+    Router -- "Navigate" --> ResumeApp
+    
+    %% Hosting
+    Client -. "Deployed on" .-> Hosting
+```
+
+---
+
+## 📊 UML Diagrams
+
+### 1. Use Case Diagram
+This diagram outlines the interactions between the users (Actors) and the system's core functionalities.
+
+```mermaid
+usecaseDiagram
+    actor "Guest User" as Guest
+    actor "Authenticated User" as User
+    
+    rectangle "AI Mock Interview Platform" {
+        usecase "Sign Up / Sign In" as UC1
+        usecase "View Landing Page" as UC2
+        usecase "Create AI Interview" as UC3
+        usecase "Create/Use Custom Question Bank" as UC4
+        usecase "Take Mock Interview (Webcam/Mic)" as UC5
+        usecase "View Analytics & Reports" as UC6
+        usecase "Generate Cover Letter" as UC7
+        usecase "Analyze Resume (ATS)" as UC8
+        usecase "Submit Community Feedback" as UC9
+    }
+    
+    Guest --> UC1
+    Guest --> UC2
+    
+    User --> UC3
+    User --> UC4
+    User --> UC5
+    User --> UC6
+    User --> UC7
+    User --> UC8
+    User --> UC9
+    
+    UC1 ..> User : "Authenticates as"
+```
+
+### 2. Activity Diagram
+This activity diagram demonstrates the workflow of a user navigating the platform to take a mock interview.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Dashboard
+    
+    Dashboard --> ChooseInterviewType
+    
+    state ChooseInterviewType {
+        [*] --> AIGenerated
+        [*] --> CustomBank
+    }
+    
+    AIGenerated --> InputJobDetails: Enter Role, Stack, Exp
+    InputJobDetails --> GenerateQuestions: Call Gemini AI
+    
+    CustomBank --> SelectBank: Pick existing bank
+    SelectBank --> GenerateIdealAnswers: AI generates answers for bank
+    
+    GenerateQuestions --> SaveToFirestore
+    GenerateIdealAnswers --> SaveToFirestore
+    
+    SaveToFirestore --> InterviewSession
+    
+    state InterviewSession {
+        [*] --> DisplayQuestion
+        DisplayQuestion --> EnableWebcamMic
+        EnableWebcamMic --> RecordAnswer
+        RecordAnswer --> StopRecording
+        StopRecording --> EvaluateAnswer: Send to Gemini AI
+        EvaluateAnswer --> SaveFeedback
+        SaveFeedback --> NextQuestion: If more questions exist
+        NextQuestion --> DisplayQuestion
+        SaveFeedback --> FinishInterview: If all questions answered
+    }
+    
+    FinishInterview --> ViewAnalytics
+    ViewAnalytics --> [*]
+```
+
+### 3. Sequence Diagram
+This sequence diagram illustrates the internal interactions during the answer evaluation process.
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Browser as Client UI
+    participant STT as Speech-to-Text API
+    participant AI as Gemini 2.5 API
+    participant DB as Firestore
+    
+    User->>Browser: Clicks "Start Recording"
+    Browser->>STT: Initialize Microphone
+    User->>STT: Speaks Answer
+    STT-->>Browser: Returns Transcribed Text
+    User->>Browser: Clicks "Stop Recording"
+    
+    Browser->>AI: Send Prompt: Question, Ideal Answer, User Answer
+    activate AI
+    AI-->>Browser: Return JSON (Rating 1-10, Feedback)
+    deactivate AI
+    
+    Browser->>Browser: Display Feedback to User
+    
+    User->>Browser: Clicks "Save Result"
+    Browser->>DB: Check if question already answered
+    activate DB
+    DB-->>Browser: Answer does not exist
+    Browser->>DB: Save Answer, Rating, Feedback
+    DB-->>Browser: Success Confirmation
+    deactivate DB
+    
+    Browser-->>User: Toast "Answer Saved"
+```
+
+### 4. Class Diagram
+This diagram shows the structure of the data models stored in Firestore and manipulated within the application.
+
+```mermaid
+classDiagram
+    class User {
+        +String id
+        +String name
+        +String email
+        +String imageUrl
+        +Timestamp createdAt
+        +Timestamp updateAt
+    }
+
+    class Interview {
+        +String id
+        +String userId
+        +String position
+        +String description
+        +Number experience
+        +String techStack
+        +Array questions
+        +Timestamp createdAt
+        +Timestamp updatedAt
+    }
+
+    class UserAnswer {
+        +String id
+        +String userId
+        +String mockIdRef
+        +String question
+        +String correct_ans
+        +String user_ans
+        +String feedback
+        +Number rating
+        +Timestamp createdAt
+    }
+
+    class QuestionBank {
+        +String id
+        +String title
+        +String description
+        +Array techStack
+        +Number experienceLevel
+        +String createdBy
+        +Boolean isPublic
+        +Array questions
+        +Number likes
+    }
+
+    class CoverLetter {
+        +String id
+        +String userId
+        +String jobDescription
+        +String companyName
+        +String generatedLetter
+        +String tone
+        +Timestamp createdAt
+    }
+    
+    class Feedback {
+        +String id
+        +String userId
+        +String userName
+        +String message
+        +Timestamp createdAt
+    }
+
+    User "1" --> "0..*" Interview : creates
+    User "1" --> "0..*" UserAnswer : submits
+    User "1" --> "0..*" QuestionBank : creates
+    User "1" --> "0..*" CoverLetter : generates
+    User "1" --> "0..*" Feedback : writes
+    Interview "1" --> "0..*" UserAnswer : contains
+```
+
+---
+
