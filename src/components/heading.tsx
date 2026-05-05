@@ -12,7 +12,7 @@ export const Headings = ({ title, description, isSubHeading = false }: HeadingsP
         <div>
             <h2
                 className={cn(
-                    "text-2xl md:text-3xl text-gray-900 font-semibold tracking-tight",
+                    "text-2xl md:text-3xl text-white-900 font-semibold tracking-tight",
                     isSubHeading && "text-lg md:text-xl text-gray-800"
                 )}
             >

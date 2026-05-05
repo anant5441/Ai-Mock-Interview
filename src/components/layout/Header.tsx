@@ -55,7 +55,6 @@ const Header = () => {
 
                         {/* ── CENTER: Navigation ── */}
                         <nav className="hidden lg:flex items-center gap-1">
-                            {/* Public pages — subtle */}
                             <div className="flex items-center gap-5 mr-6">
                                 <NavItem to="/" label="Home" subtle />
                                 <NavItem to="/about" label="About" subtle />
@@ -63,12 +62,10 @@ const Header = () => {
                                 <NavItem to="/contact" label="Contact" subtle />
                             </div>
 
-                            {/* Separator */}
                             {userId && (
                                 <div className="w-px h-5 bg-slate-200 dark:bg-slate-700 mx-2" />
                             )}
 
-                            {/* Primary nav (auth) */}
                             {userId && (
                                 <div className="flex items-center gap-5 ml-2">
                                     <NavItem to="/generate" label="Interview" />
@@ -78,13 +75,13 @@ const Header = () => {
                                     {/* Career Tools Dropdown */}
                                     <div
                                         ref={dropdownRef}
-                                        className="relative"
+                                        className="relative py-2" // Added padding to bridge the gap
                                         onMouseEnter={() => setCareerDropdownOpen(true)}
                                         onMouseLeave={() => setCareerDropdownOpen(false)}
                                     >
                                         <button
                                             type="button"
-                                            onClick={() => setCareerDropdownOpen(!careerDropdownOpen)}
+                                            onClick={() => setCareerDropdownOpen((prev) => !prev)}
                                             className={cn(
                                                 "flex items-center gap-1 text-sm font-medium transition-colors duration-200 cursor-pointer",
                                                 "text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400",
@@ -103,11 +100,12 @@ const Header = () => {
                                         {/* Dropdown panel */}
                                         <div
                                             className={cn(
-                                                "absolute top-full left-1/2 -translate-x-1/2 mt-3 w-56",
+                                                "absolute top-full left-1/2 -translate-x-1/2 w-56",
                                                 "bg-white dark:bg-slate-800 backdrop-blur-xl",
                                                 "rounded-xl shadow-2xl",
                                                 "border border-slate-100 dark:border-slate-700",
                                                 "transition-all duration-200 origin-top",
+                                                // Simplified visibility logic
                                                 careerDropdownOpen
                                                     ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
                                                     : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
@@ -152,7 +150,6 @@ const Header = () => {
                         {/* ── RIGHT: Actions ── */}
                         <div className="flex items-center gap-1.5">
                             <ThemeToggle />
-
                             {userId && (
                                 <Link
                                     to="/feedback"
@@ -162,12 +159,9 @@ const Header = () => {
                                     <MessageSquare className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                                 </Link>
                             )}
-
                             <div className="ml-1">
                                 <ProfileContainer />
                             </div>
-
-                            {/* Mobile hamburger */}
                             <button
                                 onClick={() => setMobileOpen(true)}
                                 className="lg:hidden p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ml-1 cursor-pointer"
@@ -180,7 +174,6 @@ const Header = () => {
                 </div>
             </header>
 
-            {/* Mobile Menu */}
             <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
         </>
     );

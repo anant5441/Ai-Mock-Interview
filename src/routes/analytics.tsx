@@ -352,11 +352,11 @@ const AnalyticsPage = () => {
                                 <p className="text-gray-500 text-sm mt-1">{user?.primaryEmailAddress?.emailAddress}</p>
                             </div>
                         </div>
-                        <div className="flex gap-3">
+                        <div className="flex flex-wrap gap-3">
                             <Button
                                 onClick={handleExportCSV}
                                 variant="outline"
-                                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                                className="bg-white dark:bg-white/10 border-slate-200 dark:border-white/20 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/20 shadow-sm"
                             >
                                 <Download className="w-4 h-4 mr-2" />
                                 Export CSV
@@ -364,7 +364,7 @@ const AnalyticsPage = () => {
                             <Button
                                 onClick={handleExportPDF}
                                 variant="outline"
-                                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                                className="bg-white dark:bg-white/10 border-slate-200 dark:border-white/20 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-white/20 shadow-sm"
                             >
                                 <FileText className="w-4 h-4 mr-2" />
                                 Export PDF
