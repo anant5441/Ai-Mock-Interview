@@ -713,15 +713,15 @@ usecaseDiagram
     actor "Authenticated User" as User
     
     rectangle "AI Mock Interview Platform" {
-        usecase "Sign Up / Sign In" as UC1
-        usecase "View Landing Page" as UC2
-        usecase "Create AI Interview" as UC3
-        usecase "Create/Use Custom Question Bank" as UC4
-        usecase "Take Mock Interview (Webcam/Mic)" as UC5
-        usecase "View Analytics & Reports" as UC6
-        usecase "Generate Cover Letter" as UC7
-        usecase "Analyze Resume (ATS)" as UC8
-        usecase "Submit Community Feedback" as UC9
+        (Sign Up / Sign In) as UC1
+        (View Landing Page) as UC2
+        (Create AI Interview) as UC3
+        (Create/Use Custom Question Bank) as UC4
+        (Take Mock Interview (Webcam/Mic)) as UC5
+        (View Analytics & Reports) as UC6
+        (Generate Cover Letter) as UC7
+        (Analyze Resume (ATS)) as UC8
+        (Submit Community Feedback) as UC9
     }
     
     Guest --> UC1
@@ -735,7 +735,7 @@ usecaseDiagram
     User --> UC8
     User --> UC9
     
-    UC1 ..> User : "Authenticates as"
+    UC1 ..> User : Authenticates as
 ```
 
 ### 2. Activity Diagram
