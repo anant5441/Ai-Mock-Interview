@@ -704,41 +704,8 @@ graph TB
 
 ## 📊 UML Diagrams
 
-### 1. Use Case Diagram
-This diagram outlines the interactions between the users (Actors) and the system's core functionalities.
 
-```mermaid
-usecaseDiagram
-    actor "Guest User" as Guest
-    actor "Authenticated User" as User
-    
-    rectangle "AI Mock Interview Platform" {
-        (Sign Up / Sign In) as UC1
-        (View Landing Page) as UC2
-        (Create AI Interview) as UC3
-        (Create/Use Custom Question Bank) as UC4
-        (Take Mock Interview (Webcam/Mic)) as UC5
-        (View Analytics & Reports) as UC6
-        (Generate Cover Letter) as UC7
-        (Analyze Resume (ATS)) as UC8
-        (Submit Community Feedback) as UC9
-    }
-    
-    Guest --> UC1
-    Guest --> UC2
-    
-    User --> UC3
-    User --> UC4
-    User --> UC5
-    User --> UC6
-    User --> UC7
-    User --> UC8
-    User --> UC9
-    
-    UC1 ..> User : Authenticates as
-```
-
-### 2. Activity Diagram
+### 1. Activity Diagram
 This activity diagram demonstrates the workflow of a user navigating the platform to take a mock interview.
 
 ```mermaid
@@ -779,7 +746,7 @@ stateDiagram-v2
     ViewAnalytics --> [*]
 ```
 
-### 3. Sequence Diagram
+### 2. Sequence Diagram
 This sequence diagram illustrates the internal interactions during the answer evaluation process.
 
 ```mermaid
@@ -814,7 +781,7 @@ sequenceDiagram
     Browser-->>User: Toast "Answer Saved"
 ```
 
-### 4. Class Diagram
+### 3. Class Diagram
 This diagram shows the structure of the data models stored in Firestore and manipulated within the application.
 
 ```mermaid
